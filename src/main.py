@@ -74,8 +74,8 @@ def create_token():
 @jwt_required()
 def protected():
     current_user_id = get_jwt_identity()
-    user = User.filter.get(current_user_id)
-    return jsonify({"id": user.id, "password": user.password }), 200
+    user = User.query.get(current_user_id)
+    return jsonify(user.serialize(long=True)), 200
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT',5000))

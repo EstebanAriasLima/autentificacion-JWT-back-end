@@ -11,12 +11,18 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
 
-    def serialize(self):
-        return {
+    def serialize(self, long=False):
+        response = {
             "id": self.id,
             "email": self.email,
             # do not serialize the password, its a security breach
         }
+        if long:
+            return {**{
+            "password":self.password
+            },**response} 
+        else:
+            return response
 
     @classmethod
     def create(cls, **data):
